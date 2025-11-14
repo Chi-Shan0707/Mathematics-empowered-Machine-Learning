@@ -105,7 +105,10 @@ class My_Model(nn.Module):
 def select_feat(train_data, valid_data, test_data, select_all=True):
     '''Selects useful features to perform regression'''
     y_train, y_valid = train_data[:,-1], valid_data[:,-1]
+#  最后一列当label
+
     raw_x_train, raw_x_valid, raw_x_test = train_data[:,:-1], valid_data[:,:-1], test_data
+# 除了最后一列都是feature
 
     if select_all:
         feat_idx = list(range(raw_x_train.shape[1]))
@@ -191,10 +194,11 @@ def trainer(train_loader, valid_loader, model, config, device):
 #device = 'cuda' if torch.cuda.is_available() else 'cpu'
 device='cpu'
 config = {
-    'seed': 20251113,      # Your seed number, you can pick your lucky number. :)
-    'select_all': True,   # Whether to use all features.
-    'valid_ratio': 0.15,   # validation_size = train_size * valid_ratio
-    'n_epochs': 10000,     # Number of epochs.            
+    'seed': 20251114,      # Your seed number, you can pick your lucky number. :)
+    'select_all': False,   # Whether to use all features.
+    # False！
+    'valid_ratio': 0.30,   # validation_size = train_size * valid_ratio
+    'n_epochs': 5000,     # Number of epochs.            
     'batch_size': 256, 
     'learning_rate': 1e-6,              
     'early_stop': 500,    # If model has not improved for this many consecutive epochs, stop training.     
